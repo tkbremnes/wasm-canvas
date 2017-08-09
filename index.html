@@ -1,11 +1,32 @@
 <html>
 <head>
     <meta charset="utf-8">
+
+    <style>
+        * {
+            box-sizing: border-box;   
+        }
+        html,body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: rgb(190, 190, 185);
+        }
+        canvas {
+            height: 288px;
+            image-rendering: optimizespeed;
+            border: 2px solid rgba(0, 0, 0, 0.4)
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas" height="144" width="160">
-    <script>
 
+    <script>
         function getRandomPixelArray() {
             function getRandomArbitrary(min, max) {
                 return Math.round(Math.random() * (max - min) + min);
@@ -27,7 +48,6 @@
             [139, 172, 15],
             [155, 188, 15],
         ]
-
 
         // now to paint it
         const context = canvas.getContext("2d");
