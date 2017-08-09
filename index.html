@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <canvas id="canvas" height="144" width="160">
+    <script>
+
+        function getRandomPixelArray() {
+            function getRandomArbitrary(min, max) {
+                return Math.round(Math.random() * (max - min) + min);
+            }
+
+            const pixelArray = [];
+            for (let i=0; i<160; i++) {
+                for(let j=0; j<144; j++) {
+                    pixelArray.push(getRandomArbitrary(0, 3));
+                }
+            }
+            return pixelArray;
+        }
+
+        const canvas = document.querySelector("#canvas");
+        const colors = [
+            [15, 56, 15],
+            [48, 98, 48],
+            [139, 172, 15],
+            [155, 188, 15],
+        ]
+
+
+        // now to paint it
+        const context = canvas.getContext("2d");
+
+        let colorArray = [];
+        function calculateImageData(pixelArray) {
+            colorArray.length = 0;
+            pixelArray.forEach((pixel) => {
+                const color = colors[pixel];
+                colorArray.push(color[0])
+                colorArray.push(color[1])
+                colorArray.push(color[2])
+                colorArray.push(255)
+            });
+            const intArray = Uint8ClampedArray.from(colorArray);
+            const imageData = new ImageData(intArray, 160, 144);
+            return imageData;
+        }
+
+        function draw() {
+            const fillColor = colors[3];
+            context.fillStyle = `rgb(${fillColor[0]}, ${fillColor[1]}, ${fillColor[2]})`;
+            context.fillRect(0, 0, 144, 160);
+            const imageData = calculateImageData(getRandomPixelArray());
+            context.putImageData(imageData, 0, 0);
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+    </script>
+</body>
+</html>
